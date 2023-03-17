@@ -6,11 +6,17 @@
 // INPUT
 const gridInput = document.querySelector('.grid')
 const btn = document.querySelector('.play-button')
-const gridBlock = document.getElementsByClassName('grid-item')
-
+const option = document.getElementById('difficult')
+console.log(option.value);
 // LOGICA
 //creare la griglia al click del bottone 'play'
-btn.addEventListener('click', generateGrid100)
+if(option.value === 'easy'){
+    btn.addEventListener('click', generateGrid49)
+} else if (option.value === 'medium'){
+    btn.addEventListener('click', generateGrid81)
+} else if (option.value === 'hard'){
+    btn.addEventListener('click', generateGrid100)
+}
 
 // functions
 /**
@@ -35,9 +41,29 @@ function generateGrid100(){
     }
 }
 
+/**
+ * Description genera una griglia di 49 blocchi
+ */
+function generateGrid49(){
+    for (let i = 1; i <= 49; i++){
+        const grid = createGridItems(i)
+        gridInput.append(grid)
+    }
+}
+
+/**
+ * Description genera una griglia di 81 blocchi
+ */
+function generateGrid81(){
+    for (let i = 1; i <= 81; i++){
+        const grid = createGridItems(i)
+        gridInput.append(grid)
+    }
+}
+
 function handleClick(){
     this.classList.add('bg-change')
-    console.log(this.innerText);
+    console.log(this.innerTextgrid);
 }
 
 
