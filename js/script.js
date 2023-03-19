@@ -10,65 +10,54 @@ const option = document.getElementById('difficult')
 console.log(option.value);
 // LOGICA
 //creare la griglia al click del bottone 'play'
-if(option.value === 'easy'){
-    btn.addEventListener('click', generateGrid49)
-} else if (option.value === 'medium'){
-    btn.addEventListener('click', generateGrid81)
-} else if (option.value === 'hard'){
-    btn.addEventListener('click', generateGrid100)
-}
+btn.addEventListener('click', function(){
+    let difficult = option.value
+    if (difficult === 'easy'){
+        generateGrid(49, 'easy')
+        addFunctionToClick('div.grid-item', handleClick)
+
+    } else if(difficult === 'medium'){
+        generateGrid(81, 'medium')
+        addFunctionToClick('div.grid-item', handleClick)
+    } else if(difficult === 'hard'){
+        generateGrid(100, 'hard')
+        addFunctionToClick('div.grid-item', handleClick)
+    }
+})
 
 // functions
 /**
  * Description creazione di tanti item quanti richiesti
  * @returns item
 */
-function createGridItems(innerText){
+function createGridItems(innerText, lvl){
     const Item = document.createElement('div')
-    Item.classList.add('grid-item')
-    Item.addEventListener('click', handleClick)
+    Item.classList.add('grid-item', lvl)
     Item.innerText = innerText
     return Item
 }
 
 /**
  * Description genera una griglia di 100 blocchi
- */
-function generateGrid100(){
-    for (let i = 1; i <= 100; i++){
-        const grid = createGridItems(i)
+*/
+function generateGrid(number, lvlmode){
+    gridInput.innerHTML = ''
+    for (let i = 1; i <= number; i++){
+        const grid = createGridItems(i, lvlmode)
         gridInput.append(grid)
-    }
-}
-
-/**
- * Description genera una griglia di 49 blocchi
- */
-function generateGrid49(){
-    for (let i = 1; i <= 49; i++){
-        const grid = createGridItems(i)
-        gridInput.append(grid)
-    }
-}
-
-/**
- * Description genera una griglia di 81 blocchi
- */
-function generateGrid81(){
-    for (let i = 1; i <= 81; i++){
-        const grid = createGridItems(i)
-        gridInput.append(grid)
+        
     }
 }
 
 function handleClick(){
     this.classList.add('bg-change')
-    console.log(this.innerTextgrid);
+    console.log(this.innerText);
 }
 
-
-
-
-///////////////////////////////////////////////////////////////////////////
-//per il bonus eliminare width e height da css .grid-item e creare una classe apposita per 100 blocchi, 81 e 49 con le width e height adatte
-// creare altre due function generategrid e fare un if con la difficolta
+function addFunctionToClick(element, functionToInsert){
+    const arrayItems = document.querySelectorAll(element)
+    for(i = 0; i < arrayItems.length; i++){
+        const currentItem = arrayItems[i]
+        currentItem.addEventListener('click', functionToInsert)
+    }
+}
